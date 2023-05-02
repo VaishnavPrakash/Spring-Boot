@@ -5,13 +5,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="CricInfo")
+@Table(name="CricInfo1")
 
 public class CricInfoModel {
 	@Id
 	private int jno;
 	private String name;
-	private String dob;
+	private int age;
 	private String place;
 	private String role;
 	private int mp;
@@ -28,11 +28,11 @@ public class CricInfoModel {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getDob() {
-		return dob;
+	public int getAge() {
+		return age;
 	}
-	public void setDob(String dob) {
-		this.dob = dob;
+	public void setAge(int age) {
+		this.age = age;
 	}
 	public String getRole() {
 		return role;

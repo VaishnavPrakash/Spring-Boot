@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.cricInfo.Model.CricInfoModel;
+import com.example.cricInfo.Repo.CricInfoRepo;
 import com.example.cricInfo.Service.CricInfoService;
 
 @RestController
@@ -22,29 +23,51 @@ public class CricInfoController {
 	public CricInfoService obj;
 	
 	@PostMapping("/pocric")
-	
 	public CricInfoModel addDetails(@RequestBody CricInfoModel a)
 	{
 		return obj.save(a);
 	}
 	@GetMapping("/gcric")
-	
 	public List<CricInfoModel> getDetails()
 	{
 		return obj.findAllCric();
 	}
-	
-	@PutMapping("/pcric")
-	
-	public CricInfoModel updateDetails(@RequestBody CricInfoModel cid)
+	@PutMapping("/pcric/{cid}")
+	public CricInfoModel updateDetails(@PathVariable int cid,@RequestBody CricInfoModel a)
 	{
-		return obj.update(cid);
+		return obj.update(cid,a);
 	}
-	
 	@DeleteMapping("/dcric/{cid}")
 	public String deleteDetails(@PathVariable("cid")int mid)
 	{
 		obj.delete(mid);
 		return "Deleted Sucessfully";
 	}
+	
+	@Autowired
+	public CricInfoRepo grepo;
+	@GetMapping("/sortAsc/{name}")
+	public List<CricInfoModel> sortAscend(@PathVariable("name") String vehicleName)
+	{
+		return obj.sortAsc(vehicleName);
+	}
+	@GetMapping("/sortDesc/{name}")
+	public List<CricInfoModel> sortDesc(@PathVariable("name") String vehicleName)
+	{
+		return obj.sortDesc(vehicleName);
+	}
+	
+	@GetMapping("/pagination/{pageNo}/{pageSize}")
+	public List<CricInfoModel> paginationData(@PathVariable("pageNo")int pnu,@PathVariable("pageSize") int psize)
+	{
+		return obj.paginationData(pnu,psize);
+	}
+	
+	@GetMapping("/pagiantionAndSorting/{pageNo}/{pageSize}/{name}")
+	public List<CricInfoModel> paginationAndSorting(@PathVariable("pageNo") int pnu,@PathVariable("pageSize") int psize,@PathVariable("name") String name)
+	{
+		return obj.paginationAndSorting(pnu, psize, name);
+	}
+	
+	
 }
